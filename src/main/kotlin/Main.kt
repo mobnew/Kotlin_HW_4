@@ -58,18 +58,3 @@ object WallService {
         arrayPosts = emptyArray()
     }
 }
-
-
-fun main() {
-    WallService.add(Post(text = "test post 1"))
-    WallService.add(Post(text = "test post zzzzzzzzzz"))
-    WallService.add(Post(text = "test post ppppppppppp"))
-
-//    println(WallService.getAll().contentToString())
-
-    val postForEdit = Post(id = 2, ownerId = 111, text = "changed text", friendsOnly = true, canPin = false, canDelete = false)
-    WallService.update(postForEdit)
-
-//    println(WallService.getAll().contentToString())
-
-}
