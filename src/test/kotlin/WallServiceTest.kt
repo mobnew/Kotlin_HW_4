@@ -9,7 +9,7 @@ class WallServiceTest {
 
     @Test
     fun addTest() {
-        val post = WallService.add(Post(text = "test post 1"))
+        val post = WallService.add(Post(text = "test post 1", friendsOnly = null))
         assertNotEquals(0, post.id)
     }
 
