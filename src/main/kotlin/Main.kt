@@ -32,7 +32,8 @@ data class Post(
     val reposts: Reposts = Reposts(0, false),
     val views: Int = 0,
     val canPin: Boolean = true,
-    val canDelete: Boolean = true
+    val canDelete: Boolean = true,
+    val attachment: List<Attachment> = emptyList()
 )
 
 object WallService {
