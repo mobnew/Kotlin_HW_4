@@ -26,13 +26,14 @@ data class Post(
     val id: Int = 0,
     val ownerId: Int = 0,
     val text: String,
-    val friendsOnly: Boolean = false,
+    val friendsOnly: Boolean? = false,
     val comments: Comments = Comments(0, true,true,true,true),
     val likes: Likes = Likes(0, false, true, true),
     val reposts: Reposts = Reposts(0, false),
     val views: Int = 0,
     val canPin: Boolean = true,
-    val canDelete: Boolean = true
+    val canDelete: Boolean = true,
+    val attachment: List<Attachment> = emptyList()
 )
 
 object WallService {
