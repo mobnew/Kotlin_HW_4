@@ -6,6 +6,12 @@ import ru.netology.*
 
 class WallServiceTest {
 
+    private fun addPostsForTesting() {
+        WallService.add(Post(text = "test post 1"))
+        WallService.add(Post(text = "test post zzzzzzzzzz"))
+        WallService.add(Post(text = "test post ppppppppppp"))
+    }
+
     @Test
     fun addTest() {
         val post = WallService.add(Post(text = "test post 1", friendsOnly = null))
@@ -19,9 +25,7 @@ class WallServiceTest {
 
     @Test
     fun updateTestPositive() {
-        WallService.add(Post(text = "test post 1"))
-        WallService.add(Post(text = "test post zzzzzzzzzz"))
-        WallService.add(Post(text = "test post ppppppppppp"))
+        addPostsForTesting()
 
         val postForEdit = Post(id = 2, ownerId = 111, text = "changed text", friendsOnly = true, canPin = false, canDelete = false)
         val updatePost = WallService.update(postForEdit)
@@ -31,9 +35,7 @@ class WallServiceTest {
 
     @Test
     fun updateTestNegative() {
-        WallService.add(Post(text = "test post 1"))
-        WallService.add(Post(text = "test post zzzzzzzzzz"))
-        WallService.add(Post(text = "test post ppppppppppp"))
+        addPostsForTesting()
 
         val postForEdit = Post(id = 20, ownerId = 111, text = "changed text", friendsOnly = true, canPin = false, canDelete = false)
         val updatePost = WallService.update(postForEdit)
@@ -43,9 +45,7 @@ class WallServiceTest {
 
     @Test
     fun updateTestWithAttachments() {
-        WallService.add(Post(text = "test post 1"))
-        WallService.add(Post(text = "test post zzzzzzzzzz"))
-        WallService.add(Post(text = "test post ppppppppppp"))
+        addPostsForTesting()
 
         val photo = Photo(1, 1, photo_130 = "https://vk.com/some_photo_link" , photo_604 = "https://vk.com/another_photo_link")
         val photoAttachment = PhotoAttachment(photo)
@@ -67,4 +67,24 @@ class WallServiceTest {
 
         assertTrue(updatePost)
     }
+
+    @Test(expected = PostNotFoundException::class)
+    fun shouldThrow() {
+        addPostsForTesting()
+
+        val id = 20
+        val testComment = Comment(1,15,0,"first")
+        WallService.createComment(id, testComment)
+    }
+
+    @Test
+    fun shouldNotThrow() {
+        addPostsForTesting()
+
+        val id = 1
+        val testComment = Comment(1,15,0,"first")
+        WallService.createComment(id, testComment)
+    }
+
+
 }

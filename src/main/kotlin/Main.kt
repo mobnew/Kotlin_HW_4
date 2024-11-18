@@ -2,14 +2,6 @@ package ru.netology
 
 import kotlin.random.Random
 
-data class Comments(
-    val count: Int,
-    val canPost: Boolean,
-    val canGroupPost: Boolean,
-    val canClose: Boolean,
-    val canOpen: Boolean
-)
-
 data class Likes(
     val count: Int,
     val userLikes: Boolean,
@@ -27,7 +19,7 @@ data class Post(
     val ownerId: Int = 0,
     val text: String,
     val friendsOnly: Boolean? = false,
-    val comments: Comments = Comments(0, true,true,true,true),
+    val comments: Comment = Comment(0, 12,0,"true,true"),
     val likes: Likes = Likes(0, false, true, true),
     val reposts: Reposts = Reposts(0, false),
     val views: Int = 0,
@@ -36,8 +28,29 @@ data class Post(
     val attachment: List<Attachment> = emptyList()
 )
 
+data class Comment(
+    val id: Int,
+    val fromId: Int,
+    val date: Int,
+    val text: String
+)
+
+class PostNotFoundException(message: String): RuntimeException(message)
+
 object WallService {
-    var arrayPosts = emptyArray<Post>()
+    private var arrayPosts = emptyArray<Post>()
+    private var comments = emptyArray<Comment>()
+
+    @Throws(PostNotFoundException::class)
+    fun createComment(postId: Int, comment: Comment): Comment {
+        for (post in arrayPosts) {
+            if (post.id == postId) {
+                comments += comment
+                return comments.last()
+            }
+        }
+        throw PostNotFoundException("Post with id $postId not found")
+    }
 
     fun add(post: Post): Post {
         val tmpPost = post.copy(id = arrayPosts.count() + 1, ownerId = Random.nextInt(1,100_000))
