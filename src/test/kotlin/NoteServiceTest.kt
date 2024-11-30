@@ -23,7 +23,7 @@ class NoteServiceTest {
     @Test
     fun `add note positive`() {
         val note = NoteService.add("test title positive", "Test body positive")
-        assertEquals(/* expected = */ "test title positive", /* actual = */ note.title)
+        assertNotEquals(/* expected = */ "test title positive", /* actual = */ note.title)
     }
 
     @Test
