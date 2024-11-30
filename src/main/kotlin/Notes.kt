@@ -87,6 +87,8 @@ object NoteService {
 
     fun clearAll() {
         notes.clear()
+        nextNoteId = 1
+        nextCommentId = 1
     }
 
     fun getLastNoteId(): Int {
